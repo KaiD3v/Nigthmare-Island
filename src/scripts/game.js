@@ -15,6 +15,8 @@ class StartGame extends Phaser.Scene {
     const water = map.createLayer("water", tileSetWater, 0, 0);
 
     const player = createPlayer(this);
+    player.anims.play('player_idle', true)
+    player.setCollideWorldBounds(true);
   }
 }
 
@@ -27,7 +29,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 0 },
+      gravity: { y: 0},
     },
   },
 };
