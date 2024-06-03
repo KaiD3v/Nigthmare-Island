@@ -19,11 +19,14 @@ class StartGame extends Phaser.Scene {
 
     const ground = map.createLayer("grass", tileSetGrass, 0, 0);
     const water = map.createLayer("water", tileSetWater, 0, 0);
+    water.setCollisionByProperty({ colider: true });
 
     this.player = createPlayer(this);
     this.controls = createControls(this);
     this.player.anims.play("player_idle", true);
     this.player.setCollideWorldBounds(true);
+
+    this.physics.add.collider(this.player, water);
   }
 
   update() {
