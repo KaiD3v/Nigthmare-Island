@@ -3,15 +3,18 @@ class StartGame extends Phaser.Scene {
     this.load.image("tiles", "./assets/maps/grass.png");
     this.load.image("border", "./assets/maps/water.png");
     this.load.tilemapTiledJSON("map", "./assets/maps/gamemap.json");
+    loadSprites(this);
   }
 
   create() {
     const map = this.make.tilemap({ key: "map" });
-    const tileSetGrass = map.addTilesetImage("grass", "tiles"); // Correção aqui
-    const tileSetWater = map.addTilesetImage("water", "border"); // Correção aqui
+    const tileSetGrass = map.addTilesetImage("grass", "tiles");
+    const tileSetWater = map.addTilesetImage("water", "border");
 
     const ground = map.createLayer("grass", tileSetGrass, 0, 0);
     const water = map.createLayer("water", tileSetWater, 0, 0);
+
+    const player = createPlayer(this);
   }
 }
 
@@ -24,7 +27,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 200 },
+      gravity: { y: 0 },
     },
   },
 };
