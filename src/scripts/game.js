@@ -1,4 +1,10 @@
 class StartGame extends Phaser.Scene {
+  constructor() {
+    super();
+    this.player = null;
+    this.controls = null;
+  }
+
   preload() {
     this.load.image("tiles", "./assets/maps/grass.png");
     this.load.image("border", "./assets/maps/water.png");
@@ -14,9 +20,14 @@ class StartGame extends Phaser.Scene {
     const ground = map.createLayer("grass", tileSetGrass, 0, 0);
     const water = map.createLayer("water", tileSetWater, 0, 0);
 
-    const player = createPlayer(this);
-    player.anims.play('player_idle', true)
-    player.setCollideWorldBounds(true);
+    this.player = createPlayer(this);
+    this.controls = createControls(this);
+    this.player.anims.play("player_idle", true);
+    this.player.setCollideWorldBounds(true);
+  }
+
+  update() {
+    configControls(this.player, this.controls, this);
   }
 }
 
@@ -29,7 +40,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 0},
+      gravity: { y: 0 },
     },
   },
 };
