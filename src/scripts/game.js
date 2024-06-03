@@ -1,35 +1,25 @@
 class StartGame extends Phaser.Scene {
   preload() {
-    this.load.setBaseURL("https://labs.phaser.io");
-
-    this.load.image("sky", "assets/skies/space3.png");
-    this.load.image("logo", "assets/sprites/phaser3-logo.png");
-    this.load.image("red", "assets/particles/red.png");
+    this.load.image("tiles", "./assets/maps/grass.png");
+    this.load.image("border", "./assets/maps/water.png");
+    this.load.tilemapTiledJSON("map", "./assets/maps/gamemap.json");
   }
 
   create() {
-    this.add.image(400, 300, "sky");
+    const map = this.make.tilemap({ key: "map" });
+    const tileSetGrass = map.addTilesetImage("grass", "tiles"); // Correção aqui
+    const tileSetWater = map.addTilesetImage("water", "border"); // Correção aqui
 
-    const particles = this.add.particles(0, 0, "red", {
-      speed: 100,
-      scale: { start: 1, end: 0 },
-      blendMode: "ADD",
-    });
-
-    const logo = this.physics.add.image(400, 100, "logo");
-
-    logo.setVelocity(100, 200);
-    logo.setBounce(1, 1);
-    logo.setCollideWorldBounds(true);
-
-    particles.startFollow(logo);
+    const ground = map.createLayer("grass", tileSetGrass, 0, 0);
+    const water = map.createLayer("water", tileSetWater, 0, 0);
   }
 }
 
 const config = {
   type: Phaser.AUTO,
   width: 800,
-  height: 620,
+  height: 640,
+  parent: "game-container",
   scene: StartGame,
   physics: {
     default: "arcade",
